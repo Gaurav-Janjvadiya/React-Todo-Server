@@ -60,6 +60,12 @@ passport.use(new LocalStrategy(User.authenticate()));
 app.use("/todos", todoRouter);
 app.use("/", userRouter);
 
+app.use((err, req, res, next) => {  // Include the 'next' parameter
+  console.error(err.stack);         // Optionally log the error stack for debugging
+  res.status(500).json({ message: "Something went wrong" });  // Send a proper JSON response
+});
+
+
 app.listen(8000, () => {
   console.log("server is started on http://localhost:8000");
 });
